@@ -61,6 +61,46 @@ class Citire:
         
 
 
-citire1 = Citire()
-#citire1.citeste_fisier('D:\Python curs\curs39\worldcities.csv')
-citire1.afiseaza_nume('Japan')
+# citire1 = Citire()
+# #citire1.citeste_fisier('D:\Python curs\curs39\worldcities.csv')
+# citire1.afiseaza_nume('Japan')
+
+# -mutati-va pe noul branch si creati o clasa numita Country care sa aiba urmatoarele metode:
+# init(name): se va crea o clasa care va retine numele tarii
+# get_cities(): returneaza toate orasele tarii respective (nu le stocheaza in memorie! executa un query si intoarce rezultatul)
+# get_capital(): returenaza capitala tarii respective
+# get_administrative_cities(): returneaza toate orasele administrative
+# get_minor_cities(): returneaza orasele minore
+
+
+class Country:
+    def __init__(self,nume_tara) -> None:
+        self.nume_tara = nume_tara
+
+    def get_cities(self):
+        query = f"SELECT city_ascii FROM `worlwide`.`world` WHERE country = '{self.nume_tara}'"
+        rezultat=mysqlcon.selecteaza_din_baza_de_date(query)
+        print(rezultat)
+
+    def get_capital(self):
+        query = f"SELECT city_ascii FROM `worlwide`.`world` WHERE capital = 'primary' and country ='{self.nume_tara}'"
+        rezultat=mysqlcon.selecteaza_din_baza_de_date(query)
+        print(rezultat)
+
+    def get_administrative_cities(self):
+        query = f"SELECT city_ascii FROM `worlwide`.`world` WHERE capital = 'admin'"
+        rezultat=mysqlcon.selecteaza_din_baza_de_date(query)
+        print(rezultat)
+
+
+    def get_minor_cities(self):
+        query = f"SELECT city_ascii FROM `worlwide`.`world` WHERE capital = 'minor'"
+        rezultat=mysqlcon.selecteaza_din_baza_de_date(query)
+        print(rezultat)
+
+citire2 = Country('Japan')
+
+citire2.get_cities()
+citire2.get_capital()
+citire2.get_administrative_cities()
+citire2.get_minor_cities()
